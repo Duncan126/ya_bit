@@ -1,0 +1,84 @@
+class CipherMaster:
+    # Не изменяйте и не перемещайте эту переменную
+    alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+
+
+    def cipher(self, original_text, shift):
+        # Метод должен возвращать зашифрованный текст
+        # с учетом переданного смещения shift.
+        result = []
+        original_text=original_text.lower()
+        for letter in original_text:
+            if letter in self.alphabet:
+                i=0
+                for simvol in self.alphabet:
+                    if letter==simvol:
+                        if shift>0:
+                            if i>=(len(self.alphabet)-shift):
+                                i=(i+shift-len(self.alphabet))
+                                result.append(self.alphabet[i])
+                            else:
+                                result.append(self.alphabet[i+shift])
+                        elif shift<0:
+                            if i+shift<=0:
+                                i=(len(self.alphabet)+i+shift)
+                                result.append(self.alphabet[i])
+                            else:
+                                result.append(self.alphabet[i+shift])
+                    else:
+                        i+=1
+            else:
+                result.append(letter)
+        # здесь ваш код
+        return ''.join(result)
+
+
+    def decipher(self, cipher_text, shift):
+        # Метод должен возвращать исходный текст
+        # с учётом переданного смещения shift.
+        y=len(self.alphabet)
+        result = []
+        shift=(-shift)
+        cipher_text=cipher_text.lower()
+        for letter in cipher_text:
+            if letter in self.alphabet:
+                i=0
+                for simvol in self.alphabet:
+                    if letter==simvol:
+                        if shift>0:
+                            if i>=(len(self.alphabet)-shift):
+                                i+=(shift-len(self.alphabet))
+                                result.append(self.alphabet[i])
+                            else:
+                                result.append(self.alphabet[i+shift])
+                        elif shift<0:
+                            if (i+shift) <0:
+                                i+=y+shift
+                                result.append(self.alphabet[i])
+                            elif (i-shift)==0:
+                                result.appeng(self.alphabet[y-1])
+                            else:
+                                result.append(self.alphabet[i+shift])
+                    else:
+                        i+=1
+            else:
+                result.append(letter)
+        return ''.join(result)
+
+
+
+
+cipher_master = CipherMaster()
+print(cipher_master.cipher(
+    original_text='Однажды ревьюер принял проект с первого раза, с тех пор я его боюсь',
+    shift=2
+))
+print(cipher_master.decipher(
+    cipher_text='Олебэи яфвнэ мроплж сэжи — э пэй рдв злййвкпш лп нвящывнэ',
+    shift=-3
+))
+
+print(cipher_master.decipher(
+    cipher_text='Уфмьпт фиёав ё ьмшфтёдсстр ёмзи. Одкицхг, сдх фдххофяпм!',
+    shift=4
+))
