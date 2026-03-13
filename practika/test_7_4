@@ -1,0 +1,69 @@
+class CipherMaster:
+    # Не изменяйте и не перемещайте эту переменную
+    alphabet = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+
+    def process_text(self, text, shift, is_encrypt):
+        result = []
+        text=text.lower()
+        y=len(self.alphabet)
+        if is_encrypt==True:
+            for letter in text:
+                if letter in self.alphabet:
+                    i=0
+                    for simvol in self.alphabet:
+                        if letter==simvol:
+                            if shift>0:
+                                if i>=(y-shift):
+                                    i=(i+shift-y)
+                                    result.append(self.alphabet[i])
+                                else:
+                                    result.append(self.alphabet[i+shift])
+                            elif shift<0:
+                                if i+shift<=0:
+                                    i=(y+i+shift)
+                                    result.append(self.alphabet[i])
+                                else:
+                                    result.append(self.alphabet[i+shift])
+                        else:
+                            i+=1
+                else:
+                    result.append(letter)
+        else:
+            shift=(-shift)
+            for letter in text:
+                if letter in self.alphabet:
+                    i=0
+                    for simvol in self.alphabet:
+                        if letter==simvol:
+                            if shift>0:
+                                if i>=(len(self.alphabet)-shift):
+                                    i+=(shift-len(self.alphabet))
+                                    result.append(self.alphabet[i])
+                                else:
+                                    result.append(self.alphabet[i+shift])
+                            elif shift<0:
+                                if (i+shift) <0:
+                                    i+=y+shift
+                                    result.append(self.alphabet[i])
+                                elif (i-shift)==0:
+                                    result.appeng(self.alphabet[y-1])
+                                else:
+                                    result.append(self.alphabet[i+shift])
+                        else:
+                            i+=1
+                else:
+                    result.append(letter)
+        return ''.join(result)
+
+
+cipher_master = CipherMaster()
+print(cipher_master.process_text(
+    text='Однажды ревьюер принял проект с первого раза, с тех пор я его боюсь',
+    shift=2,
+    is_encrypt=True
+))
+print(cipher_master.process_text(
+    text='Олебэи яфвнэ мроплж сэжи — э пэй рдв злййвкпш лп нвящывнэ',
+    shift=-3,
+    is_encrypt=False
+)) 
